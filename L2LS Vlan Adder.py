@@ -18,9 +18,9 @@ mask = Form.getFieldById("mask").getValue()
 # Generate Vlan Config Data
 new_vlan_config = "vlan %s\n   name %s\n" % (vlan, name)
 
-# Retrieve Existing Vlan Config from configlet named "Data Center Vlans"
+# Retrieve Existing Vlan Config from configlet named "L2LS Vlans"
 try:
-  vlan_configlet = server.cvpService.getConfigletByName("Data Center Vlans")
+  vlan_configlet = server.cvpService.getConfigletByName("L2LS Vlans")
   old_config = vlan_configlet["config"]
   # Parse out and split exist config for sorting purposes
   old_config_list = old_config.split("!\n")
@@ -38,7 +38,7 @@ try:
     final_vlan_config += vlan_config
     final_vlan_config += "!\n"
   # Generate configlet class object
-  final_vlan_configlet = cvp.Configlet("Data Center Vlans", final_vlan_config)
+  final_vlan_configlet = cvp.Configlet("L2LS Vlans", final_vlan_config)
   # Update configlet and return task IDs
   tasks = server.updateConfiglet(final_vlan_configlet, waitForTaskIds=True)
   print "Configlet updated. The following task IDs have been created. Execute them to push changes.\n"
@@ -47,9 +47,9 @@ try:
 # If no Vlan config exists, create configlet and apply to container named "Leafs"
 except cvp.cvpServices.CvpError as e:
   if str(e).startswith("132801"):
-    print "Data Center Vlans configlet does not exist. Creating...\n"
+    print "L2LS Vlans configlet does not exist. Creating...\n"
     base_vlan_config = new_vlan_config
-    base_vlan_configlet = cvp.Configlet("Data Center Vlans", base_vlan_config)
+    base_vlan_configlet = cvp.Configlet("L2LS Vlans", base_vlan_config)
     server.addConfiglet(base_vlan_configlet)
     # Apply Configlet to Leafs Container
     print "\nApplying new configlet to L2LS Container...\n"
