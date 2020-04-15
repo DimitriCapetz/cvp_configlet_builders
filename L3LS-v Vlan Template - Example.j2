@@ -1,0 +1,21 @@
+
+! Vlan {{ vlan_info.vlan_id }}
+!
+interface Vxlan1
+   vxlan vlan {{ vlan_info.vlan_id }} vni {{ vlan_info.vlan_id }}
+!
+vlan {{ vlan_info.vlan_id }}
+   name {{ vlan_info.vlan_name }}
+!{% if vlan_info.gateway %}
+interface Vlan{{ vlan_info.vlan_id }}
+   description {{ vlan_info.vlan_name }}
+   vrf {{ vlan_info.tenant_id }}
+   ip address virtual {{ vlan_info.gateway }}/{{ vlan_info.mask }}
+!{% endif %}
+router bgp 65100
+   !
+   vlan {{ vlan_info.vlan_id }}
+      rd auto
+      route-target both {{ vlan_info.vlan_id }}:{{ vlan_info.vlan_id }}
+      redistribute learned
+!

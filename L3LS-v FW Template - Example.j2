@@ -1,0 +1,22 @@
+
+! Tenant {{ tenant_info.tenant_id }} FW Edge Configuration
+!
+interface Port-Channel199
+   switchport trunk allowed vlan add {{ tenant_info.vlan_id }}
+!
+vlan {{ tenant_info.fw_vlan_id }}
+   name {{ tenant_info.tenant_id }}_FW
+!
+interface Vlan{{ tenant_info.fw_vlan_id }}
+   description {{ tenant_info.tenant_id }} FW Routing Network
+   vrf {{ tenant_info.tenant_id }}
+   ip address {{ tenant_info.fw_prefix }}.{{ tenant_info.switch_ip }}/29
+   ip virtual-router address {{ tenant_info.fw_prefix }}.1
+!
+ip route vrf {{ tenant_info.tenant_id }} 0.0.0.0/0 {{ tenant_info.fw_prefix }}.4
+!
+router bgp 65100
+   !
+   vrf {{ tenant_info.tenant_id }}
+      redistribute static
+!

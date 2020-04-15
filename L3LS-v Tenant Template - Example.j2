@@ -1,0 +1,17 @@
+
+! Tenant {{ tenant_info.tenant_id }} Base VRF
+!
+vrf instanace {{ tenant_info.tenant_id }}
+!
+interface Vxlan1
+   vxlan vrf {{ tenant_info.tenant_id }} vni {{ tenant_info.fw_vlan_id }}00
+!
+ip routing vrf {{ tenant_info.tenant_id }}
+!
+router bgp 65100
+   !
+   vrf {{ tenant_info.tenant_id }}
+      route-target import evpn {{ tenant_info.fw_vlan_id }}00:{{ tenant_info.fw_vlan_id }}
+      route-target export evpn {{ tenant_info.fw_vlan_id }}00:{{ tenant_info.fw_vlan_id }}
+      redistribute connected
+!
