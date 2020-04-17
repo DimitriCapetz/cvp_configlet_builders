@@ -27,7 +27,7 @@ except cvp.cvpServices.CvpError as e:
     print "L3LS-v Vlan Template configlet does not exist.  Exiting..."
 
 # Render Vlan Template for Config Application
-# Create dictionary based on Field Inputs for feeding purposes
+# Create dictionary based on Field inputs for feeding purposes
 if gateway != None:
   vlan_info = {
     "vlan_id" : vlan,

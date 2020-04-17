@@ -1,7 +1,7 @@
 
 ! Tenant {{ tenant_info.tenant_id }} Base VRF
 !
-vrf instanace {{ tenant_info.tenant_id }}
+vrf instance {{ tenant_info.tenant_id }}
 !
 interface Vxlan1
    vxlan vrf {{ tenant_info.tenant_id }} vni {{ tenant_info.fw_vlan_id }}00

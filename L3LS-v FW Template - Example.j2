@@ -2,7 +2,7 @@
 ! Tenant {{ tenant_info.tenant_id }} FW Edge Configuration
 !
 interface Port-Channel199
-   switchport trunk allowed vlan add {{ tenant_info.vlan_id }}
+   switchport trunk allowed vlan add {{ tenant_info.fw_vlan_id }}
 !
 vlan {{ tenant_info.fw_vlan_id }}
    name {{ tenant_info.tenant_id }}_FW
